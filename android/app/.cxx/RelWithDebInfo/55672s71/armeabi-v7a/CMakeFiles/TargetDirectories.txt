@@ -1,0 +1,2 @@
+C:/Users/Sachin/StudioProjects/project/mayway/android/app/.cxx/RelWithDebInfo/55672s71/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/Sachin/StudioProjects/project/mayway/android/app/.cxx/RelWithDebInfo/55672s71/armeabi-v7a/CMakeFiles/rebuild_cache.dir

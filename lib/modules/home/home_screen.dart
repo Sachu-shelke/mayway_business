@@ -1652,17 +1652,26 @@ class _HomeScreenState extends State<HomeScreen>
                         ),
                       );
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: GradientText(
-                        "${GlobalSingleton.loginInfo!.data!.firstName} ${GlobalSingleton.loginInfo!.data!.lastName}..!",
-                        style: AppTextStyle.semiBold26,
-                        gradient: const LinearGradient(colors: [
-                          Color(0xff101A33),
-                          Color(0xff618DEC),
-                        ]),
+                    child:
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Container(
+                        constraints: BoxConstraints(maxWidth: 250),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child:
+                          GradientText(
+                            "${GlobalSingleton.loginInfo!.data!.firstName} ${GlobalSingleton.loginInfo!.data!.lastName}..!",
+                            style: AppTextStyle.semiBold26,
+                            gradient: const LinearGradient(colors: [
+                              Color(0xff101A33),
+                              Color(0xff618DEC),
+                            ]),
+                          ),
+                        ),
                       ),
                     ),
+
                   ),
                   Row(
                     children: [
