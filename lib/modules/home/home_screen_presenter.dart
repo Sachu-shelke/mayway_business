@@ -183,7 +183,7 @@ class BasicHomeScreenPresenter implements HomeScreenPresenter {
       "title": "Gmail",
       "image_url": AppAssets.gmail,
       "functions": () {
-        launch("mailto:support@mirrorinfo.in");
+        launch("mailto:Support@mayway.in");
       },
     },
     {

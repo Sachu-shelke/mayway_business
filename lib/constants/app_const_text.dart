@@ -1,7 +1,7 @@
 class AppConstString {
   static const String appName = "Mayway business";
   static const String ctn = "Continue";
-  static const String supportNumber = "9146954496";
+  static const String supportNumber = "+919112421742";
   static const String appVersion = "3.0.12.38";
   static const String rupeesSymbol = "₹";
   static const String ownersNumber = "9096608606";

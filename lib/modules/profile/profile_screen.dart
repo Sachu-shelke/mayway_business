@@ -87,10 +87,13 @@ class _ProfileScreenState extends State<ProfileScreen> implements ProfileView {
         print("Total Earning: ${earningsData['total_earning']}");
         print("Total Remaining: ${earningsData['total_remaining']}");
 
-        double? investment = double.tryParse(earningsData['total_investment']?.toString() ?? '0.0');
-        double? earning = double.tryParse(earningsData['total_earning']?.toString() ?? '0.0');
+        double? investment = double.tryParse(
+            earningsData['total_investment']?.toString() ?? '0.0');
+        double? earning =
+            double.tryParse(earningsData['total_earning']?.toString() ?? '0.0');
 
-        if (mounted) { // ✅ Check if the widget is still mounted before updating state
+        if (mounted) {
+          // ✅ Check if the widget is still mounted before updating state
           setState(() {
             totalInvestment = investment;
             totalEarning = earning;
@@ -225,46 +228,43 @@ class _ProfileScreenState extends State<ProfileScreen> implements ProfileView {
                       //       const SizedBox(
                       //         height: 10,
                       //       ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "${GlobalSingleton.loginInfo!.data!.firstName} ${GlobalSingleton.loginInfo!.data!.lastName}",
-                                  textScaleFactor: 1.0,
-                                  style: AppTextStyle.semiBold18,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${GlobalSingleton.loginInfo!.data!.firstName} ${GlobalSingleton.loginInfo!.data!.lastName}",
+                            textScaleFactor: 1.0,
+                            style: AppTextStyle.semiBold18,
+                          ),
+                          const SizedBox(
+                            height: 6,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "+91 ${GlobalSingleton.loginInfo!.data!.mobile!}",
+                                textScaleFactor: 1.0,
+                                style: AppTextStyle.regular14,
+                              ),
+                              Container(
+                                height: 20, // Adjust height as needed
+                                child: VerticalDivider(
+                                  color: Colors.black54, // Divider color
+                                  thickness: 1, // Divider thickness
+                                  width:
+                                      10, // Space between text and the divider
                                 ),
-
-                                const SizedBox(
-                                  height: 6,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "+91 ${GlobalSingleton.loginInfo!.data!.mobile!}",
-                                      textScaleFactor: 1.0,
-                                      style: AppTextStyle.regular14,
-                                    ),
-
-                                    Container(
-                                      height: 20, // Adjust height as needed
-                                      child: VerticalDivider(
-                                        color: Colors.black54, // Divider color
-                                        thickness: 1, // Divider thickness
-                                        width: 10, // Space between text and the divider
-                                      ),
-                                    ),
-
-                                    Text(
-                                      "${GlobalSingleton.loginInfo!.data!.mlmId}",
-                                      textScaleFactor: 1.0,
-                                      style: AppTextStyle.regular14,
-                                    ),
-                                  ],
-                                ),
-
-                              ],
-                            ),
+                              ),
+                              Text(
+                                "${GlobalSingleton.loginInfo!.data!.mlmId}",
+                                textScaleFactor: 1.0,
+                                style: AppTextStyle.regular14,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                       //     ],
                       //   ),
                       // ),
@@ -284,7 +284,7 @@ class _ProfileScreenState extends State<ProfileScreen> implements ProfileView {
                                     child: WalletBalanceContainer(
                                       title: "My Investment",
                                       subtitle:
-                                      '₹ ${totalInvestment?.toStringAsFixed(2) ?? '0.00'}',
+                                          '₹ ${totalInvestment?.toStringAsFixed(2) ?? '0.00'}',
                                     ),
                                   ),
                                 ),
@@ -296,7 +296,7 @@ class _ProfileScreenState extends State<ProfileScreen> implements ProfileView {
                                     child: WalletBalanceContainer(
                                       title: "Total Return",
                                       subtitle:
-                                      '₹ ${totalEarning?.toStringAsFixed(2) ?? '0.00'}',
+                                          '₹ ${totalEarning?.toStringAsFixed(2) ?? '0.00'}',
                                     ),
                                   ),
                                 )
@@ -640,7 +640,7 @@ class _ProfileScreenState extends State<ProfileScreen> implements ProfileView {
     //   "title": "Gmail",
     //   "imageUrl": AppAssets.gmail,
     //   "function": () {
-    //     launch("mailto:support@mirrorinfo.in");
+    //     launch("mailto:Support@mayway.in");
     //   },
     // },
     {
@@ -795,4 +795,3 @@ class WalletBalanceContainer extends StatelessWidget {
     );
   }
 }
-

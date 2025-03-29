@@ -72,13 +72,7 @@ class _RedeemScreenState extends State<RedeemScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        leading: InkWell(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
-          },
-          child: const Icon(Icons.keyboard_backspace_rounded, color: AppColors.whiteColor),
-        ),
-          title: widget.isFromEwallet == true ? 'Activation' : 'Redeem'),
+          title: widget.isFromEwallet == true ? 'Activation' : 'My Redeem'),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         children: [
@@ -87,8 +81,8 @@ class _RedeemScreenState extends State<RedeemScreen>
           ),
           Text(
             widget.isFromEwallet == true
-                ? "My Activation point"
-                : 'My Redeem Points',
+                ? "Activation point"
+                : 'Referral Points',
             style: AppTextStyle.semiBold18,
           ),
           const SizedBox(
@@ -331,9 +325,250 @@ class _RedeemScreenState extends State<RedeemScreen>
             ],
           ),
           const SizedBox(
-            height: 10,
+            height: 15,
+          ),
+          Text(
+             'Profit Redeem Points',
+            style: AppTextStyle.semiBold18,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                widget.isFromEwallet == true
+                    ? GlobalSingleton.epinWalletBalance.toString()
+                    : model.teamDetailsData.totalEarning != null
+                    ? getRedeemAmount(
+                    totalEarningIncome:
+                    model.teamDetailsData.totalEarning.toString(),
+                    totalRedeemIncome: model
+                        .teamDetailsData.totalWithdrawal
+                        .toString())
+                    : "----",
+                style: AppTextStyle.semiBold24
+                    .copyWith(color: AppColors.secoundColors),
+              ),
+              if (widget.isFromEwallet == true)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        dialogData();
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 5),
+                        decoration: BoxDecoration(
+                            color: AppColors.appColors,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Text(
+                          'Id Activation',
+                          style: AppTextStyle.semiBold14
+                              .copyWith(color: AppColors.whiteColor),
+                        ),
+                      ),
+                    ),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     appRouter.pushNamed('/send_money_screen/true');
+                    //   },
+                    //   child: Container(
+                    //     padding: const EdgeInsets.symmetric(
+                    //         horizontal: 20, vertical: 5),
+                    //     decoration: BoxDecoration(
+                    //         color: AppColors.secoundColors,
+                    //         borderRadius: BorderRadius.circular(10)),
+                    //     child: Text(
+                    //       'Send Money',
+                    //       style: AppTextStyle.semiBold14
+                    //           .copyWith(color: AppColors.whiteColor),
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
+              if (widget.isFromEwallet == false)
+                InkWell(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(32.0),
+                              ),
+                            ),
+                            insetPadding: const EdgeInsets.all(10),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(22),
+                                      // decoration: BoxDecoration(
+                                      //   color: const Color(0xffEBF4FB),
+                                      //   shape: BoxShape.circle,
+                                      //   border: Border.all(
+                                      //       color: AppColors.greyColor),
+                                      // ),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xffEBF4FB),
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: AppColors.greyColor
+                                              .withOpacity(0.5),
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              blurRadius: 2,
+                                              offset: const Offset(1, 1),
+                                              color: AppColors.greyColor
+                                                  .withOpacity(0.5),
+                                              spreadRadius: 1)
+                                        ],
+                                      ),
+                                      child: Center(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'My Redeem\nPoints',
+                                              textAlign: TextAlign.center,
+                                              style: AppTextStyle.semiBold14,
+                                            ),
+                                            Text(
+                                              model.teamDetailsData
+                                                  .totalEarning !=
+                                                  null
+                                                  ? getRedeemAmount(
+                                                  totalEarningIncome: model
+                                                      .teamDetailsData
+                                                      .totalEarning
+                                                      .toString(),
+                                                  totalRedeemIncome: model
+                                                      .teamDetailsData
+                                                      .totalWithdrawal
+                                                      .toString())
+                                                  : "----",
+                                              style: AppTextStyle.semiBold14
+                                                  .copyWith(
+                                                  color: AppColors
+                                                      .secoundColors),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: AmountTextField(
+                                        controller: _amountController,
+                                        onChanged: (val) {
+                                          model.isButtonTap = false;
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10.0),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: DefaultTextField(
+                                          controller: _noteController,
+                                          color: AppColors.whiteColor,
+                                          labelTextStrr: "Note"),
+                                    ),
+                                    const SizedBox(height: 16.0),
+                                    InkWell(
+                                      onTap: () {
+                                        FocusScope.of(context).unfocus();
+                                        if (_formKey.currentState!.validate()) {
+                                          if (model.isButtonTap == false) {
+                                            model.isButtonTap = true;
+                                            // Navigator.pop(context);
+                                            if (double.parse(getRedeemAmount(
+                                                totalEarningIncome: model
+                                                    .teamDetailsData
+                                                    .totalEarning
+                                                    .toString(),
+                                                totalRedeemIncome: model
+                                                    .teamDetailsData
+                                                    .totalWithdrawal
+                                                    .toString())) >=
+                                                double.parse(
+                                                    _amountController.text)) {
+                                              presenter.redeem(
+                                                  context: context,
+                                                  note: _noteController.text,
+                                                  userId: GlobalSingleton
+                                                      .loginInfo!.data!.id
+                                                      .toString(),
+                                                  amount:
+                                                  _amountController.text);
+                                            } else {
+                                              model.isButtonTap = false;
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                  SnackBars.errorSnackBar(
+                                                      title:
+                                                      "you don't have sufficient balance in your wallet"));
+                                            }
+                                          }
+                                        }
+                                        setState(() {});
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 40, vertical: 5),
+                                        decoration: BoxDecoration(
+                                            color: AppColors.appColors,
+                                            borderRadius:
+                                            BorderRadius.circular(10)),
+                                        child: Text(
+                                          'Redeem Now',
+                                          style: AppTextStyle.semiBold14
+                                              .copyWith(
+                                              color: AppColors.whiteColor),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16.0),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        });
+                  },
+                  child: Container(
+                    padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    decoration: BoxDecoration(
+                        color: AppColors.appColors,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Text(
+                      'Redeem Now',
+                      style: AppTextStyle.semiBold14
+                          .copyWith(color: AppColors.whiteColor),
+                    ),
+                  ),
+                ),
+            ],
           ),
           const Divider(),
+
           const SizedBox(
             height: 10,
           ),

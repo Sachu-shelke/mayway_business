@@ -193,7 +193,8 @@ class BasicRedeemPresenter implements RedeemPresenter {
         data: {'user_id': userId, 'remarks': note, 'amount': amount},
         context: context);
     model.isButtonTap = false;
-    print(response.toString());
+    print('Redeem: ${response.toString()}');
+
     if (response != null && response['status'] == 200) {
       appRouter.pushAndPopUntil(
           RedeemSucessScreenRoute(
@@ -217,7 +218,7 @@ class BasicRedeemPresenter implements RedeemPresenter {
       data: {'user_id': userId, "page": 1},
       // context: context
     );
-
+    print(' History Redeem: ${response.toString()}');
     if (response != null && response['status'] == 200) {
       if (isFromEwallet == true) {
         model.epinHisoryModel =

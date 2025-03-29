@@ -167,12 +167,6 @@ class _IncomePassbookScreenState extends State<IncomePassbookScreen>
       child: Scaffold(
           appBar: widget.isFromDrawer == true
               ? CustomAppBar(
-            leading: InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
-              },
-              child: Icon(Icons.arrow_back),
-            ),
                   title: 'Reward Passbook',
                   actions: [
                     InkWell(

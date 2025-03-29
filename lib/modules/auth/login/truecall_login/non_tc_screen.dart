@@ -345,7 +345,7 @@
 //   }
 
 //   _navigateToResult(String firstName) {
-//     Navigator.pushReplacement(
+//     Navigator.push(
 //         context,
 //         MaterialPageRoute(
 //           builder: (context) => ResultScreen(firstName),

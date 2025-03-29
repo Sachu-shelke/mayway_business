@@ -282,8 +282,7 @@ class _MainHomeScreenState extends State<MainHomeScreen>
                     ),
                     BottomNavigationBarItem(
                       label: 'Business',
-                      icon: Icon(
-                                Icons.shopping_bag_outlined,
+                      icon: Icon(Icons.shopping_bag_outlined,
                                 size: 30,
                               ),
                       // Stack(
@@ -376,7 +375,7 @@ class _MainHomeScreenState extends State<MainHomeScreen>
     } else if (model.selectedIndex == 3) {
       return HomeAppBar(
         onTap: () {
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const ProfileScreen(
               isFromDrawer: false,

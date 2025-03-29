@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
 import 'dart:ui';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/rendering.dart';
 import 'package:dio/dio.dart' as dio;
@@ -73,7 +74,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen>
-    with WidgetsBindingObserver implements HomeScreenView {
+    with WidgetsBindingObserver
+    implements HomeScreenView {
   final UserEarningsService _userEarningsService = UserEarningsService();
   late HomeScreenModel model;
   HomeScreenPresenter presenter = BasicHomeScreenPresenter();
@@ -181,10 +183,12 @@ class _HomeScreenState extends State<HomeScreen>
       });
     });
   }
+
   Future<void> _fetchData() async {
     await _userEarningsService.fetchUserEarnings();
     setState(() {}); // Trigger UI update
   }
+
   showDialogWidget() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -476,8 +480,6 @@ class _HomeScreenState extends State<HomeScreen>
     Colors.blue, // Earnings (Blue)
     Colors.deepPurple, // Remaining (Dark Blue)
   ];
-
-
 
   _share(imageUrl) async {
     var url = imageUrl.toString();
@@ -1082,17 +1084,17 @@ class _HomeScreenState extends State<HomeScreen>
             const SizedBox(
               height: AppSizes.size10,
             ),
-            Align(
-              alignment: Alignment.center,
-              child: AnimatedSmoothIndicator(
-                activeIndex: featuredSlideIndex,
-                count: model.graphicsdata.length,
-                effect: const ExpandingDotsEffect(
-                    dotWidth: 10.0,
-                    dotHeight: 10.0,
-                    activeDotColor: AppColors.secoundColors),
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.center,
+            //   child: AnimatedSmoothIndicator(
+            //     activeIndex: featuredSlideIndex,
+            //     count: model.graphicsdata.length,
+            //     effect: const ExpandingDotsEffect(
+            //         dotWidth: 10.0,
+            //         dotHeight: 10.0,
+            //         activeDotColor: AppColors.secoundColors),
+            //   ),
+            // ),
             const SizedBox(
               height: AppSizes.size10,
             ),
@@ -1479,7 +1481,6 @@ class _HomeScreenState extends State<HomeScreen>
                       imageurl: model.mirrorConnectList[index]['image_url'],
                       extraFunction: () {},
                       onPress: model.mirrorConnectList[index]['functions']),
-
                 ),
               ),
             ),
@@ -1502,11 +1503,13 @@ class _HomeScreenState extends State<HomeScreen>
           ],
         ));
   }
+
   void _launchEmail() async {
     final Uri emailUri = Uri(
       scheme: 'mailto',
-      path: 'support@mirrorinfo.in',
-      query: 'subject=Feedback&body=Enter your message here...', // Optional subject and body
+      path: 'Support@mayway.in',
+      query:
+          'subject=Feedback&body=Enter your message here...', // Optional subject and body
     );
 
     if (await canLaunch(emailUri.toString())) {
@@ -1515,6 +1518,7 @@ class _HomeScreenState extends State<HomeScreen>
       throw 'Could not launch email client';
     }
   }
+
   void forceUpdateDialog(BuildContext context) async {
     return showDialog(
       context: context,
@@ -1605,8 +1609,7 @@ class _HomeScreenState extends State<HomeScreen>
   Widget walletBalanceService() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child:
-      Column(
+      child: Column(
         children: [
           Row(
             children: [
@@ -1637,7 +1640,6 @@ class _HomeScreenState extends State<HomeScreen>
                           Color(0xff101A33),
                           Color(0xFFFFD700), // Golden color
                         ]),
-
                       ),
                     ),
                   ),
@@ -1653,14 +1655,20 @@ class _HomeScreenState extends State<HomeScreen>
                       );
                     },
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: GradientText(
-                        "${GlobalSingleton.loginInfo!.data!.firstName} ${GlobalSingleton.loginInfo!.data!.lastName}..!",
-                        style: AppTextStyle.semiBold26,
-                        gradient: const LinearGradient(colors: [
-                          Color(0xff101A33),
-                          Color(0xff618DEC),
-                        ]),
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Container(
+                        constraints: BoxConstraints(maxWidth: 250),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: GradientText(
+                            "${GlobalSingleton.loginInfo!.data!.firstName} ${GlobalSingleton.loginInfo!.data!.lastName}..!",
+                            style: AppTextStyle.semiBold26,
+                            gradient: const LinearGradient(colors: [
+                              Color(0xff101A33),
+                              Color(0xff618DEC),
+                            ]),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -1695,18 +1703,19 @@ class _HomeScreenState extends State<HomeScreen>
           Container(
             padding: const EdgeInsets.all(8),
             // margin: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                color: AppColors.lightBlueColor,
-                borderRadius: BorderRadius.circular(10), // Optional: adds rounded corners
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey, // Shadow color
-                      spreadRadius: 2, // How much the shadow spreads
-                      blurRadius: 10, // Softness of the shadow
-                      offset: Offset(4, 4), // Changes position of shadow (x, y)
-                    ),
-                  ],
+            decoration: BoxDecoration(
+              color: AppColors.lightBlueColor,
+              borderRadius:
+                  BorderRadius.circular(10), // Optional: adds rounded corners
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.grey, // Shadow color
+                  spreadRadius: 2, // How much the shadow spreads
+                  blurRadius: 10, // Softness of the shadow
+                  offset: Offset(4, 4), // Changes position of shadow (x, y)
                 ),
+              ],
+            ),
 
             child: Column(
               children: [
@@ -1794,39 +1803,43 @@ class _HomeScreenState extends State<HomeScreen>
                         ],
                       ),
                     ),
-                      Column(
+                    Column(
                       children: [
-                        (_userEarningsService.dataMap == null || _userEarningsService.dataMap!.isEmpty)
-                    ? const Center(child: CircularProgressIndicator())
-                        : InkWell(
-                          onTap: () => Scrollable.ensureVisible(key1.currentContext!),
-                          child: PieChart(
-                            dataMap: _userEarningsService.dataMap!,
-                            animationDuration: const Duration(milliseconds: 800),
-                            chartLegendSpacing: 32,
-                            chartRadius: MediaQuery.of(context).size.width / 3,
-                            colorList: colorList,
-                            initialAngleInDegree: 270,
-                            chartType: ChartType.disc,
-                            ringStrokeWidth: 20,
-                            legendOptions: const LegendOptions(
-                              showLegends: false,
-                              legendTextStyle: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            chartValuesOptions: ChartValuesOptions(
-                              showChartValueBackground: false,
-                              showChartValues: true,
-                              showChartValuesInPercentage: true,
-                              showChartValuesOutside: false,
-                              decimalPlaces: 1,
-                              chartValueStyle: AppTextStyle.semiBold16,
+                        (_userEarningsService.dataMap == null ||
+                                _userEarningsService.dataMap!.isEmpty)
+                            ? const Center(child: CircularProgressIndicator())
+                            : InkWell(
+                                onTap: () => Scrollable.ensureVisible(
+                                    key1.currentContext!),
+                                child: PieChart(
+                                  dataMap: _userEarningsService.dataMap!,
+                                  animationDuration:
+                                      const Duration(milliseconds: 800),
+                                  chartLegendSpacing: 32,
+                                  chartRadius:
+                                      MediaQuery.of(context).size.width / 3,
+                                  colorList: colorList,
+                                  initialAngleInDegree: 270,
+                                  chartType: ChartType.disc,
+                                  ringStrokeWidth: 20,
+                                  legendOptions: const LegendOptions(
+                                    showLegends: false,
+                                    legendTextStyle:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
-                               ),
-                            ),
-                        ],
+                                  chartValuesOptions: ChartValuesOptions(
+                                    showChartValueBackground: false,
+                                    showChartValues: true,
+                                    showChartValuesInPercentage: true,
+                                    showChartValuesOutside: false,
+                                    decimalPlaces: 1,
+                                    chartValueStyle: AppTextStyle.semiBold16,
+                                  ),
+                                ),
+                              ),
+                      ],
                     ),
-
-                   ],
+                  ],
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1856,9 +1869,7 @@ class _HomeScreenState extends State<HomeScreen>
                       child: const Text(
                         'Id Activation >>>',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18
-                        ),
+                            fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ),
                     // const SizedBox(
@@ -1932,7 +1943,8 @@ class _HomeScreenState extends State<HomeScreen>
             padding: const EdgeInsets.symmetric(
                 horizontal: AppSizes.size26, vertical: 15),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10), // Optional: adds rounded corners
+                borderRadius:
+                    BorderRadius.circular(10), // Optional: adds rounded corners
                 boxShadow: const [
                   BoxShadow(
                     color: Colors.grey,
@@ -1944,42 +1956,49 @@ class _HomeScreenState extends State<HomeScreen>
                 image: const DecorationImage(
                     image: AssetImage(AppAssets.cardBlueService),
                     fit: BoxFit.fill)),
-            child:
-            Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(
                 model.rechargeServiceList.length,
-                    (index) => MirrorServiceButton(
+                (index) => MirrorServiceButton(
                   title: model.rechargeServiceList[index].title.toString(),
-                  assetFile: model.rechargeServiceList[index].imageUrl.toString(),
-                      onPress: () {
-                        final functionPath = model.rechargeServiceList[index].functions;
+                  assetFile:
+                      model.rechargeServiceList[index].imageUrl.toString(),
+                  onPress: () {
+                    final functionPath =
+                        model.rechargeServiceList[index].functions;
 
-                        if (functionPath != null && functionPath.isNotEmpty) {
-                          if (functionPath == '/add_money_screen') {
-                            context.router.push(RedeemScreenRoute(isFromEwallet: true));
-                          } else if (functionPath == '/refer_screen') {
-                            Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => const ReferScreen(),));
-                          } else if (functionPath == '/passbook_page') {
-                            Navigator.pop(context);context.router.push(IncomePassbookScreenRoute(isFromDrawer: true));
-                          }else {
-                            // Navigator.pushNamed(context, functionPath);
-                          }
-                        } else {
-                          Fluttertoast.showToast(msg: "This feature is coming soon.");
-                        }
-                      },
-                    ),
+                    if (functionPath != null && functionPath.isNotEmpty) {
+                      if (functionPath == '/add_money_screen') {
+                        context.router
+                            .push(RedeemScreenRoute(isFromEwallet: true));
+                      } else if (functionPath == '/refer_screen') {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ReferScreen(),
+                            ));
+                      } else if (functionPath == '/passbook_page') {
+                        context.router.push(
+                            IncomePassbookScreenRoute(isFromDrawer: true));
+                      } else {
+                        Navigator.pushNamed(context, functionPath);
+                      }
+                    } else {
+                      Fluttertoast.showToast(
+                          msg: "This feature is coming soon.");
+                    }
+                  },
+                ),
               ),
             ),
-
           ),
-
           SizedBox(
             height: 15,
           ),
-          Divider(thickness: 2,),
+          Divider(
+            thickness: 2,
+          ),
         ],
       ),
     );
@@ -2164,7 +2183,7 @@ class _HomeScreenState extends State<HomeScreen>
     //   "title": "Gmail",
     //   "imageUrl": AppAssets.gmail,
     //   "function": () {
-    //     launch("mailto:support@mirrorinfo.in");
+    //     launch("mailto:Support@mayway.in");
     //   },
     // },
     {
@@ -2358,7 +2377,9 @@ class MirrorServiceButton extends StatelessWidget {
               // color: primaryColor,
             ),
           ),
-          SizedBox(height: 5,),
+          SizedBox(
+            height: 5,
+          ),
           Text(
             title,
             textScaleFactor: 1.0,
@@ -2432,7 +2453,6 @@ class ServicesIconWidget extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 8), // Space before the divider
-
                   ],
                 ),
                 const SizedBox(height: 5),
@@ -2452,7 +2472,6 @@ class ServicesIconWidget extends StatelessWidget {
               ],
             ),
           ),
-
         ],
       ),
     );
@@ -2500,49 +2519,177 @@ class _ScrollViewState extends State<ScrollView> {
     );
   }
 }
+
 class UserEarningsService {
   final Dio _dio = Dio();
-  Map<String, double> dataMap = {}; // Store data in a variable
+
+  Map<String, double> dataMap = {}; // For pie chart
+  List<Map<String, dynamic>> earningsList = []; // ⬅️ Add this line
 
   Future<void> fetchUserEarnings() async {
     try {
-      int? userId = int.tryParse(GlobalSingleton.loginInfo!.data!.id.toString());
+      int? userId =
+          int.tryParse(GlobalSingleton.loginInfo!.data!.id.toString());
 
       if (userId == null) {
         print("⚠️ User ID is null!");
         return;
       }
 
-      print("🚀 Fetching earnings for user ID: $userId");
-
       Response response = await _dio.post(
         'https://api.mayway.in/api/refferal-report/user-earning',
         data: {'user_id': userId},
       );
 
-      print("✅ Response received: ${response.data}");
-
       if (response.statusCode == 200 && response.data['data'] != null) {
-        var earningsData = response.data['data'][0];
+        var dataList = response.data['data'];
 
-        double totalEarning = (earningsData['total_earning'] ?? 0).toDouble();
-        double totalRemaining = (earningsData['total_remaining'] ?? 0).toDouble();
+        earningsList =
+            List<Map<String, dynamic>>.from(dataList); // ⬅️ Populate it
 
-        print("💰 Total Earning: $totalEarning");
-        print("💰 Total Remaining: $totalRemaining");
+        // Optional: setup dataMap from first entry
+        if (dataList.isNotEmpty) {
+          double totalEarning = (dataList[0]['total_earning'] ?? 0).toDouble();
+          double totalRemaining =
+              (dataList[0]['total_remaining'] ?? 0).toDouble();
 
-        // Update the dataMap
-        dataMap = {
-          if (totalEarning > 0) "Earnings": totalEarning,
-          if (totalRemaining > 0) "Remaining": totalRemaining,
-        };
-
-        print("📊 Data Map Updated: $dataMap");
+          dataMap = {
+            if (totalEarning > 0) "Earnings": totalEarning,
+            if (totalRemaining > 0) "Remaining": totalRemaining,
+          };
+        }
       } else {
-        print("‼️ Error fetching earnings: ${response.statusCode}, Response: ${response.data}");
+        print(
+            "‼️ Error fetching earnings: ${response.statusCode}, Response: ${response.data}");
       }
     } catch (e) {
       print("❌ Exception fetching earnings: $e");
     }
+  }
+}
+
+class InvestmentCardWidget extends StatefulWidget {
+  const InvestmentCardWidget({super.key});
+
+  @override
+  State<InvestmentCardWidget> createState() => _InvestmentCardWidgetState();
+}
+
+class _InvestmentCardWidgetState extends State<InvestmentCardWidget> {
+  final UserEarningsService _service = UserEarningsService();
+  int selectedIndex = -1;
+
+  @override
+  void initState() {
+    super.initState();
+    _service.fetchUserEarnings().then((_) => setState(() {}));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: _service.earningsList.length,
+      itemBuilder: (context, index) {
+        final data = _service.earningsList[index];
+        final isExpanded = selectedIndex == index;
+
+        return Column(
+          children: [
+            InkWell(
+              onTap: () {
+                setState(() {
+                  selectedIndex = isExpanded ? -1 : index;
+                });
+              },
+              child: Container(
+                width: double.infinity,
+                // padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  // color: AppColors.appColors,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    buildColumn("₹${data['amount']}", "Investment"),
+                    buildColumn("₹${data['total_earning']}", "Returns"),
+                    buildColumn("₹${data['total_remaining']}", "Remaining"),
+                  ],
+                ),
+              ),
+            ),
+
+            // Pie Chart Display
+            if (isExpanded)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: PieChart(
+                  dataMap: {
+                    if ((data['total_earning'] ?? 0) > 0)
+                      "Earnings": (data['total_earning'] as num).toDouble(),
+                    if ((data['total_remaining'] ?? 0) > 0)
+                      "Remaining": (data['total_remaining'] as num).toDouble(),
+                  },
+                  animationDuration: const Duration(milliseconds: 800),
+                  chartType: ChartType.disc,
+                  chartLegendSpacing: 32,
+                  chartRadius: MediaQuery.of(context).size.width / 2.8,
+                  colorList: [Colors.blue, Colors.deepPurple],
+                  legendOptions: const LegendOptions(showLegends: false),
+                  chartValuesOptions: const ChartValuesOptions(
+                    showChartValues: true,
+                    showChartValuesInPercentage: true,
+                    decimalPlaces: 1,
+                  ),
+                ),
+              ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget buildColumn(String value, String label) {
+    return Expanded(
+      child: Card(
+        elevation: 10,
+        child: Container(
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: AppColors.appColors,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  value,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
